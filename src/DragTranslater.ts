@@ -1,3 +1,5 @@
+import * as styles from './DragTranslater.css';
+
 export type Vector = {
   x: number;
   y: number;
@@ -23,6 +25,9 @@ export type Vector = {
  *
  * To overrule an inherited `pointer-events` style of `none`,
  * explicitly set the `pointer-events` CSS property to `auto` on an element.
+ *
+ * This class will also (transiently) give the target form DOM node a `grab` cursor style
+ * when the target form DOM node is being directly hovered with the mouse.
  */
 export class DragTranslater {
   /**
@@ -41,12 +46,19 @@ export class DragTranslater {
     window.addEventListener('mousemove', event => this.handleMouseMove(event));
 
     window.addEventListener('mouseup', event => this.handleMouseUp(event));
+
+    targetForm.addEventListener('mouseover', event => {
+      event.target === targetForm ? targetForm.classList.add(styles['grab-cursor']) : {};
+    });
+
+    targetForm.addEventListener('mouseout', event => {
+      event.target === targetForm ? targetForm.classList.remove(styles['grab-cursor']) : {};
+    });
   }
 
   /**
-   * The current translation of the target form,
-   * as defined solely by the `translate` CSS property,
-   * which is the only CSS property relevant to this class.
+   * The current translation of the target form
+   * as defined solely by the `translate` CSS property.
    */
   get currentTranslation(): Vector {
     let translatedClientRect = this.targetForm.getBoundingClientRect();
