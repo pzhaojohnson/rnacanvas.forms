@@ -40,6 +40,17 @@ export class DragTranslater {
    */
   private mouseIsDown = false;
 
+  /**
+   * The depth of interaction with the target form.
+   *
+   * When set to "shallow", the drag translater only responds
+   * to clicks on the target form node itself.
+   *
+   * When set to "deep", the drag translater responds to clicks
+   * anywhere within the target form, including on child elements.
+   */
+  interactionDepth: 'shallow' | 'deep' = 'shallow';
+
   constructor(private targetForm: HTMLElement) {
     window.addEventListener('mousedown', event => this.handleMouseDown(event));
 
@@ -103,9 +114,15 @@ export class DragTranslater {
 
   private handleMouseMove(event: MouseEvent): void {
     if (!this.mouseIsDown) { return; }
-    if (!this.lastMouseDown) { return; }
 
-    if (this.lastMouseDown.target !== this.targetForm) { return; }
+    if (!this.lastMouseDown) { return; }
+    if (!(this.lastMouseDown.target instanceof Node)) { return; }
+
+    if (this.interactionDepth == 'shallow') {
+      if (this.lastMouseDown.target !== this.targetForm) { return; }
+    } else {
+      if (!this.targetForm.contains(this.lastMouseDown.target)) { return; }
+    }
 
     let currentTranslation = this.currentTranslation;
 
