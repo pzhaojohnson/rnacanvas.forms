@@ -1,7 +1,7 @@
 {
   "name": "@rnacanvas/forms",
-  "version": "4.0.0",
-  "description": "The RNAcanvas forms package",
+  "version": "4.0.1",
+  "description": "General form functionality",
   "repository": {
     "type": "git",
     "url": "https://github.com/pzhaojohnson/rnacanvas.forms.git"
