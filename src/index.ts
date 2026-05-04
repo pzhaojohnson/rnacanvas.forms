@@ -1,2 +1,2 @@
-import { DragTranslater } from './DragTranslater';
-export { DragTranslater };
+import { DragHandler } from './DragHandler';
+export { DragHandler };

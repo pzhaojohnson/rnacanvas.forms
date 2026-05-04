@@ -1,4 +1,4 @@
-import * as styles from './DragTranslater.css';
+import * as styles from './DragHandler.css';
 
 export type Vector = {
   x: number;
@@ -29,9 +29,9 @@ export type Vector = {
  * This class will also (transiently) give the target form DOM node a `grab` cursor style
  * when the target form DOM node is being directly hovered with the mouse.
  */
-export class DragTranslater {
+export class DragHandler {
   /**
-   * The mouse recent mouse down event.
+   * The most recent mouse down event.
    */
   private lastMouseDown: MouseEvent | undefined;
 
